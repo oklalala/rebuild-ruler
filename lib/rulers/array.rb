@@ -4,7 +4,7 @@ class Array
     inject(start,&:+)
   end
 
-  def multi(start = 0)
+  def multi(start = 1)
     inject(start,&:*)
   end
 end
