@@ -1,12 +1,23 @@
-require "rulers/array"
 require "rulers/version"
+require "rulers/routing"
 
 module Rulers
   class Application
-    def call(env)
-      `echo debug > debug.txt`;
-      [200,{'Content-Type' => 'text/html'},
-        ["Hello from Ruby on Rulers! sum=#{[1,2,3,4].sum}, multi=#{[1,2,3,4].multi}"]]
-    end
+     def call(env)
+        puts "#{env} env"
+       klass, act = get_controller_and_action(env)
+       controller = klass.new(env)
+       text = controller.send(act)
+       [200, {'Content-Type' => 'text/html'},[text]]
+     end
+  end
+  class Controller
+     def initialize(env)
+       @env = env
+       puts env
+     end
+     def env
+       @env
+     end
   end
 end
